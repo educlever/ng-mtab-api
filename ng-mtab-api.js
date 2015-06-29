@@ -3,7 +3,8 @@
 (function (angular) {
 
     var module = angular.module("educ.ngMtabApi", [
-        "educ.ngJsonRpc"
+        "educ.ngJsonRpc",
+        "educ.ngStorage"
     ]);
 
     module.run(["$rootScope", function ($rootScope) {
