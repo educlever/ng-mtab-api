@@ -1,0 +1,323 @@
+@opd_titre: @opd_bleu;
+@opd_titre1: @opd_bleu;
+@opd_titre2: inherit;
+@opd_bgcolor: @opd_blanc;
+@opd_explain_color: @opd_noir;
+@opd_question_color: @opd_noir;
+@opd_answer_color: @opd_question_color;
+@opd_answer_bgcolor: @opd_bleuclair;
+@opd_answer_highlight_color: @opd_question_color;
+@opd_answer_highlight_bgcolor: @opd_bleuet;
+@opd_answer_true_color: @opd_question_color;
+@opd_answer_true_bgcolor: @opd_vertbouteille;
+@opd_answer_false_color: @opd_question_color;
+@opd_answer_false_bgcolor: @opd_orange;
+@opd_answer_hover_color: @opd_question_color;
+@opd_answer_hover_bgcolor: @opd_bleuciel;
+@opd_answer_true_badge_bgcolor: @opd_blanc;
+@opd_answer_true_badge_color: @opd_noir;
+@opd_answer_false_badge_bgcolor: @opd_blanc;
+@opd_answer_false_badge_color: @opd_noir;
+@opd_answer_hover_badge_bgcolor: @opd_blanc;
+@opd_answer_hover_badge_color: @opd_noir;
+
+//////////////////////////////////////////////
+
+// FIX SOUND ICON
+.opd a.sound-btn {
+  font-size: 24pt;
+  &:hover {
+    text-decoration: none;
+  }
+  img {
+    display: none;
+  }
+}
+
+/* opd.css */
+.opd .titre, .opd .titre a {
+  color: @opd_titre;
+}
+
+.opd .titre1, .opd .titre1 a {
+  color: @opd_titre1;
+}
+
+.opd .titre2, .opd .titre2 a {
+  color: @opd_titre2;
+}
+
+.opd .blanc {
+  color: @opd_blanc;
+}
+
+.opd .marron {
+  color: @opd_marron;
+}
+
+.opd .vert {
+  color: @opd_vert;
+}
+
+.opd .rouge {
+  color: @opd_rouge;
+}
+
+.opd .bleu {
+  color: @opd_bleu;
+}
+
+.opd .fondjaune {
+  background-color: @opd_jauneclair;
+}
+
+.opd .fondbleu {
+  background-color: @opd_bleuclair;
+}
+
+.opd .jaune {
+  color: @opd_jaune;
+}
+
+.opd .orange {
+  color: @opd_orange;
+}
+
+.opd .rosefonce {
+  color: @opd_rosefonce;
+}
+
+.opd .rose {
+  color: @opd_rose;
+}
+
+.opd .mauve {
+  color: @opd_mauve;
+}
+
+.opd .bleuet {
+  color: @opd_bleuet;
+}
+
+.opd .bleuciel {
+  color: @opd_bleuciel;
+}
+
+.opd .vertsapin {
+  color: @opd_vertsapin;
+}
+
+.opd .vertbouteille {
+  color: @opd_vertbouteille;
+}
+
+/* / opd.css */
+
+.opd .l-mauve {
+  background-color: @opd_mauve;
+  color: @opd_blanc;
+}
+
+.opd .separateur-annotation {
+  border-top: @opd_rosefonce solid 1px;
+}
+
+.opd .objectif {
+  background-color: @opd_bleuclair;
+}
+
+.opd .txt, .opd .text {
+  color: @opd_noir;
+}
+
+.opd .intro {
+  color: @opd_noir;
+  background-color: @opd_blanc;
+}
+
+.opd .essentiel,
+.opd .texte-essentiel,
+.opd .theme-definition,
+.opd .theme-propriete,
+.opd .theme-regle,
+.opd .theme-notation,
+.opd .theme-theoreme,
+.opd .theme-cas-particulier,
+.opd .theme-generique {
+  background-color: @opd_jauneclair;
+}
+
+.opd .essentiel .titre, .opd .essentiel .titre1, .opd .essentiel .titre2 {
+  color: @opd_rouge;
+}
+
+.opd .aller-plus-loin {
+  border: 1px solid @opd_bleu;
+}
+
+.opd .mxc-comment {
+  font-style: italic;
+}
+
+.opd .mxc-sonorisation {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+}
+
+.opd .mxc-sonorisation {
+  background-color: @opd_vert;
+}
+
+.opd .mxc-sonorisation.mxc-playing {
+  background-color: @opd_bleu;
+}
+
+.opd .mxc-sonorisation.mxc-paused {
+  background-color: @opd_jaune;
+}
+
+/////// mise en forme
+
+.opd .fiche .mxc-numbering {
+  display: inline-block;
+  margin-right: .5em;
+}
+
+.opd .fiche > .titre {
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.opd .fiche .titre {
+  font-weight: bold;
+}
+
+.opd .fiche .section {
+}
+
+.opd .fiche .section .section > .titre {
+  font-size: 1em;
+}
+
+.opd .fiche .section > .contenu .section > .titre {
+  font-size: 1.25em;
+}
+
+.opd .fiche .section > .titre {
+  font-size: 1.5em;
+}
+
+.opd .fiche .section > .contenu {
+  padding-left: 1em;
+}
+
+.opd .fiche .section + .section {
+  margin-top: 1em;
+}
+
+.opd .equation {
+  vertical-align: middle;
+}
+
+@media (max-width: @screen-xs-max) {
+  .opd {
+    table, img {
+      max-width: 100% !important;
+      height: auto;
+    }
+    table {
+      width: inherit;
+    }
+  }
+}
+
+.opd.opd-video video {
+  max-width: 100%;
+  min-height: 90%;
+}
+
+.opd.opd-qcm {
+  .question {
+    font-size: 1.8em;
+    color: @opd_question_color;
+    @media (max-width: @screen-xs-max) {
+      font-size: 1.4em;
+    }
+  }
+
+  .propositions {
+    margin: 0;
+    padding: 0;
+    .answer {
+      display: block;
+      background-color: @opd_answer_bgcolor;
+      color: @opd_answer_color;
+      padding: 1em 1em 0.7em 1em;
+      vertical-align: middle;
+      border-radius: 1em;
+      margin-bottom: 1em;
+      font-size: 1.4em;
+      @media (max-width: @screen-xs-max) {
+        font-size: 1.2em;
+      }
+      &.answer-highlight {
+        background-color: @opd_answer_highlight_bgcolor;
+        color: @opd_answer_highlight_color;
+      }
+      &.answer-true {
+        background-color: @opd_answer_true_bgcolor;
+        color: @opd_answer_true_color;
+      }
+      &.answer-false.answer-clicked {
+        background-color: @opd_answer_false_bgcolor;
+        color: @opd_answer_false_color;
+      }
+      &.answer-clicked {
+        padding-bottom: 1.7em;
+      }
+      img {
+        margin: 0 0 17px;
+      }
+      .answer-comment {
+        font-size: 80%;
+        font-style: italic;
+        float: right;
+        clear: right;
+      }
+      .answer-comment-container {
+        @media (max-width: @screen-sm-max) {
+          float: none !important;
+          .answer-comment {
+            float: none;
+          }
+        }
+      }
+      .badge {
+        font-size: 80%;
+        display: block;
+        float: right;
+        clear: right;
+        &.badge-win {
+          background-color: @opd_answer_true_badge_bgcolor;
+          color: @opd_answer_true_badge_color;
+        }
+        &.badge-loose {
+          background-color: @opd_answer_false_badge_bgcolor;
+          color: @opd_answer_false_badge_color;
+        }
+      }
+      &:hover .badge {
+        color: @opd_answer_hover_badge_color;
+        background-color: @opd_answer_hover_badge_bgcolor;
+      }
+    }
+  }
+
+  .explain {
+    h3 {
+      color: @opd_explain_color;
+    }
+  }
+
+}

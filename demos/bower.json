@@ -1,0 +1,30 @@
+{
+  "name": "ng-mtab-api",
+  "version": "1.0.0",
+  "authors": [
+    "EduClever <tech@educlerver.com>"
+  ],
+  "main": [
+    "ng-mtab-api.min.js"
+  ],
+  "description": "Educlever MTAB Api for AngularJS 1.x",
+  "keywords": [
+    "educlever",
+    "mtab",
+    "json-rpc"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": ">=1.3.0",
+    "ng-jsonrpc": "educlever/ng-jsonrpc",
+    "ng-storage": "educlever/ng-storage",
+    "boot": "~3.3.5"
+  }
+}

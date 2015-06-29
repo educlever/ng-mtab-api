@@ -1,0 +1,123 @@
+<h1>IHM de Test de l'API MTAB (JSON-RPC)</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <p class="label label-danger">
+            Ouvrir la console JS pour voir les réponses car elles ne seront pas affichées dans l'IHM
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="well well-sm">
+            <strong>MTAB_Arbo::getAllClasses</strong>
+            &nbsp; &nbsp;
+            <button type="submit" class="btn btn-primary" data-ng-click="mtab.arboGetAllClasses()">getAllClasses</button>
+        </div>
+    </div>
+</div>
+
+<hr/>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="well well-sm" data-ng-disabled="mtab.hasUser()">
+            <strong>MTAB_User::strongAuthent</strong>
+            <form class="form form-inline" role="form" data-ng-submit="mtab.strongAuthent(login, password)">
+                <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="login" placeholder="login">
+                </div>
+                <div class="input-group">
+                    <input type="password" class="form-control" data-ng-model="password" placeholder="password">
+                </div>
+                <button type="submit" class="btn btn-primary">strongAuthent</button>
+            </form>
+        </div>
+
+        <div class="well well-sm" data-ng-disabled="mtab.hasUser()">
+            <strong>MTAB_User::weakAuthent</strong>
+            <form class="form form-inline" role="form" data-ng-submit="mtab.weakAuthent(uid, uref)">
+                <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="uid" placeholder="uid">
+                </div>
+                <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="uref" placeholder="uref">
+                </div>
+                <button type="submit" class="btn btn-primary">weakAuthent</button>
+            </form>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <div class="well well-sm" data-ng-disabled="!mtab.hasUser()">
+            <strong>MTAB_User::logout</strong>
+            &nbsp; &nbsp;
+            <button type="submit" class="btn btn-primary" data-ng-click="mtab.logout()">logout</button>
+        </div>
+        <div class="well well-sm" data-ng-disabled="!mtab.hasUser()">
+            <strong>MTAB_User::getAllClasses</strong>
+            &nbsp; &nbsp;
+            <button type="submit" class="btn btn-primary" data-ng-click="mtab.getUser().getAllClasses()">getAllClasses</button>
+        </div>
+        <div class="well well-sm" data-ng-disabled="!mtab.hasUser()">
+            <strong>MTAB_User::changeClasse</strong>
+            <form class="form form-inline" role="form" data-ng-submit="mtab.changeClasse(classeMeta)">
+                <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="classeMeta" placeholder="classeMeta">
+                </div>
+                <button type="submit" class="btn btn-primary">changeClasse</button>
+                <div>
+                    <small>ex: cp, e1, e2, m1, m2, 6e, 5e, 4e, 3e, 2e, 1s, 1l, 1t, 1e, ts, tl, tt, te.</small>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<hr/>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="well well-sm" data-ng-disabled="!mtab.hasUser()">
+            <strong>MTAB_Arbo::get</strong>
+            <form class="form form-inline" role="form" data-ng-submit="mtab.arboGet(boId)">
+                <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="boId" placeholder="boId">
+                </div>
+                <button type="submit" class="btn btn-primary">get</button>
+            </form>
+        </div>
+
+        <div class="well well-sm" data-ng-disabled="!mtab.hasUser()">
+            <strong>MTAB_Arbo::getMany</strong>
+            <form class="form form-inline" role="form" data-ng-submit="mtab.arboGetMany(boIds)">
+                <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="boIds" placeholder="boId1,boId2,etc.">
+                </div>
+                <button type="submit" class="btn btn-primary">getMany</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="well well-sm" data-ng-disabled="!mtab.hasUser()">
+            <strong>MTAB_Opd::get</strong>
+            <form class="form form-inline" role="form" data-ng-submit="mtab.opdGet(opdId)">
+                <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="opdId" placeholder="opdId">
+                </div>
+                <button type="submit" class="btn btn-primary">get</button>
+            </form>
+        </div>
+
+        <div class="well well-sm" data-ng-disabled="!mtab.hasUser()">
+            <strong>MTAB_Opd::getMany</strong>
+            <form class="form form-inline" role="form" data-ng-submit="mtab.opdGetMany(opdIds)">
+                <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="opdIds" placeholder="opdId1,opdId2,etc.">
+                </div>
+                <button type="submit" class="btn btn-primary">getMany</button>
+            </form>
+        </div>
+    </div>
+</div>

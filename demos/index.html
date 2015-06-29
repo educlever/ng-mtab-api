@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>ng MTAB Api Démo</title>
+    <link rel="stylesheet" href="../opd.css" type="text/css"/>
+    <link rel="stylesheet" href="bower_components/boot/dist/css/bootstrap.min.css" type="text/css"/>
+</head>
+<body data-ng-app="demoApp" data-ng-controller="demoCtrl">
+<div class="container">
+    <div data-ng-include="'views/mtab.html'"></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.16/angular.min.js"></script>
+<script src="bower_components/ng-storage/ng-storage.min.js"></script>
+<script src="bower_components/ng-jsonrpc/ng-jsonrpc.min.js"></script>
+<script src="../ng-mtab-api.min.js"></script>
+<script src="../ng-mtab-directives.min.js"></script>
+<script>
+    var app = angular.module("demoApp", [
+        "educ.ngStorage",
+        "educ.ngJsonRpc",
+        "educ.ngMtabApi"
+    ]);
+
+    app.config(["MtabApiProvider", function (MtabApiProvider) {
+        MtabApiProvider.setPersistent(true);
+        MtabApiProvider.useCache(true);
+        MtabApiProvider.setUrl("http://www.maxicours.com/W/rpc/mobilite/mtab.php");
+    }]);
+
+    app.controller("demoCtrl", ["$scope", "MtabApi", function ($scope, MtabApi) {
+        $scope.mtab = MtabApi;
+    }]);
+</script>
+</body>
+</html>
