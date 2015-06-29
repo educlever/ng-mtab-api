@@ -21,6 +21,14 @@
 <hr/>
 
 <div class="row">
+    <div class="col-md-12">
+        <span>mtab.hasUser() : {{mtab.hasUser()|json}}</span>
+    </div>
+</div>
+
+<hr/>
+
+<div class="row">
     <div class="col-md-6">
         <div class="well well-sm" data-ng-disabled="mtab.hasUser()">
             <strong>MTAB_User::strongAuthent</strong>
@@ -117,6 +125,25 @@
                     <input type="text" class="form-control" data-ng-model="opdIds" placeholder="opdId1,opdId2,etc.">
                 </div>
                 <button type="submit" class="btn btn-primary">getMany</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<hr/>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="well well-sm" data-ng-disabled="!mtab.hasUser()">
+            <strong>MTAB_Trace::getPeriode</strong>
+            <form class="form form-inline" role="form" data-ng-submit="mtab.traceGetPeriode(mtab.getUser().uid, dateBegin, dateEnd)">
+                <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="dateBegin" placeholder="DATETIME début">
+                </div>
+                <div class="input-group">
+                    <input type="text" class="form-control" data-ng-model="dateEnd" placeholder="DATETIME fin">
+                </div>
+                <button type="submit" class="btn btn-primary">getPeriode</button>
             </form>
         </div>
     </div>
