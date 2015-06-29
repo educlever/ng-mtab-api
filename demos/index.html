@@ -10,11 +10,11 @@
 <div class="container">
     <div data-ng-include="'views/mtab.html'"></div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.16/angular.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/ng-storage/ng-storage.min.js"></script>
 <script src="bower_components/ng-jsonrpc/ng-jsonrpc.min.js"></script>
-<script src="../ng-mtab-api.min.js"></script>
-<script src="../ng-mtab-directives.min.js"></script>
+<script src="../ng-mtab-api.js"></script>
+<script src="../ng-mtab-directives.js"></script>
 <script>
     var app = angular.module("demoApp", [
         "educ.ngStorage",
@@ -30,6 +30,12 @@
 
     app.controller("demoCtrl", ["$scope", "MtabApi", function ($scope, MtabApi) {
         $scope.mtab = MtabApi;
+
+        var end = new Date();
+        var begin = new Date(end - 24 * 3600 * 1000);
+        $scope.dateBegin = MtabApi.dateToSqlDatetime(begin);
+        $scope.dateEnd = MtabApi.dateToSqlDatetime(end);
+
     }]);
 </script>
 </body>

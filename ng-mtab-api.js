@@ -309,6 +309,25 @@
 
             };
 
+            service.dateToSqlDatetime = function (d) {
+                return d instanceof Date ? [
+                    [d.getFullYear(), padZero(d.getMonth() + 1), padZero(d.getDate())].join("-"),
+                    [padZero(d.getHours()), padZero(d.getMinutes()), padZero(d.getSeconds())].join(":")
+                ].join(" ") : d;
+            };
+
+            service.traceGetPeriode = function (actorId, dateBegin, dateEnd) {
+                var dt1 = service.dateToSqlDatetime(dateBegin);
+                var dt2 = service.dateToSqlDatetime(dateEnd);
+                return service.withAutoReconnect(function () {
+                    return service.call("MTAB_Trace::getPeriode", [actorId, dt1, dt2])
+                        .promise
+                        .then(function (obsels) {
+                            return obsels;
+                        });
+                });
+            };
+
             service.showSoundButtons = function () {
                 var $buttons = jQuery(document.body).find('[data-opd-id] a[onclick^="mxc_son"]');
                 $buttons.show();
@@ -348,6 +367,10 @@
             };
 
             // helpers
+
+            function padZero(num) {
+                return (num >= 0 && num < 10) ? "0" + num : num + "";
+            }
 
             function e(code, method) {
                 return {
