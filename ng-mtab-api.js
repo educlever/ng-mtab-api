@@ -177,7 +177,8 @@
 
             service.arboGet = function (boId) {
                 var cacheRepo = "arboCache";
-                var cacheKey = boId;
+                var classeMeta = getUserModel().classe.meta;
+                var cacheKey = classeMeta + '-' + boId;
                 if (useCache && cacheHas(cacheRepo, cacheKey)) {
                     return cacheResolved(new ArboModel(cacheGet(cacheRepo, cacheKey)));
                 }
@@ -199,14 +200,16 @@
                     boIds = boIds.split(/\D+/);
                 }
 
+                var classeMeta = getUserModel().classe.meta;
                 var cacheRepo = "arboCache";
                 var foundArboModelsById = {};
                 var missingBoIds = [];
                 var promise;
                 boIds.forEach(function (boId) {
                     if (useCache) {
-                        if (cacheHas(cacheRepo, boId)) {
-                            foundArboModelsById[boId] = new ArboModel(cacheGet(cacheRepo, boId));
+                        var cacheKey = classeMeta + '-' + boId;
+                        if (cacheHas(cacheRepo, cacheKey)) {
+                            foundArboModelsById[boId] = new ArboModel(cacheGet(cacheRepo, cacheKey));
                         } else {
                             missingBoIds.push(boId);
                         }
@@ -222,7 +225,8 @@
                                 arboDataList.forEach(function (arboData) {
                                     var arboModel = new ArboModel(arboData);
                                     if (useCache) {
-                                        cacheSet(cacheRepo, arboModel.boId, arboModel);
+                                        var cacheKey = classeMeta + '-' + arboModel.boId;
+                                        cacheSet(cacheRepo, cacheKey, arboModel);
                                     }
                                     foundArboModelsById[arboModel.boId] = arboModel;
                                 });
