@@ -47,7 +47,8 @@
     ]);
 
     app.config(["MtabApiProvider", function (MtabApiProvider) {
-        MtabApiProvider.setUrl("http://www.maxicours.com/W/rpc/mobilite/mtab.php");
+        MtabApiProvider.setMainUrl("http://www.maxicours.com/W/rpc/mobilite/mtab.php");
+        MtabApiProvider.setEidUrl("http://www.maxicours.com/_eid.php");
         // permet de rester sur un rechargement de page
         MtabApiProvider.setPersistent(true);
         // active ou non un cache en localStorage des réponses arbo* et opd*
@@ -79,7 +80,7 @@
     }]);
 
     app.controller("demoCtrl", ["$scope", "MtabApi", function ($scope, MtabApi) {
-        $scope.mtab = MtabApi;
+        $scope.mtab = window.mtab = MtabApi;
 
         $scope.r = function (x) {
             if (x.then) {

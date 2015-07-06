@@ -21,7 +21,7 @@
 
     module.provider("MtabApi", function () {
 
-        var url;
+        var url, urlEid;
         var rpc;
         var userModel;
         // var cordovaLocalPath; // not used for web
@@ -30,8 +30,12 @@
         var persistent = true;
         var lastReconnectTime = 0;
 
-        this.setUrl = function (x) {
+        this.setMainUrl = function (x) {
             url = x;
+            return this;
+        };
+        this.setEidUrl = function (x) {
+            urlEid = x;
             return this;
         };
         this.setPersistent = function (x) {
@@ -55,7 +59,7 @@
 
             service.tryToReuseExistingSession = function () {
                 var defered = $q.defer();
-                $http.get(url + "/_eid.php", {withCredentials: true})
+                $http.get(urlEid, {withCredentials: true})
                     .success(function (data, status, headers, config) {
                         if (!data || !(200 <= status && status <= 299)) {
                             defered.reject(status);
