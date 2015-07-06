@@ -23,7 +23,7 @@
     ],
     "dependencies": {
         "angular": ">=1.3.0",
-        "ng-jsonrpc": "educlever/ng-jsonrpc",
-        "ng-storage": "educlever/ng-storage"
+        "ng-jsonrpc": "educlever/ng-jsonrpc#v1.0",
+        "ng-storage": "educlever/ng-storage#v1.0"
     }
 }
