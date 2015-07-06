@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-xs-12">
+        <button class="btn btn-success" data-ng-click="r(mtab.logout())">mtab.logout()</button>
+        <span>mtab.hasUser() : {{mtab.hasUser()}}</span>
+    </div>
+</div>
+<hr/>
+<div data-ng-init="user=mtab.getUser()">
+    <div class="row">
+        <div class="col-xs-12">
+            <p>
+                <strong>Utilisateur</strong> : {{user.pseudo}} / {{user.firstName}}
+                <button class="btn btn-default btn-xs" data-ng-click="r(mtab.getUser())">mtab.getUser()</button>
+            </p>
+            <p>
+                <strong>Classe courante</strong> :
+                <span>{{user.classe.meta}}</span> /
+                <span>{{user.classe.label}}</span> /
+                <span data-ng-bind-html="user.classe.label|trusted"></span>
+            </p>
+
+            <strong>MTAB_User::changeClasse</strong>
+            <small>ex:
+                <span data-ng-repeat="k in user.classes">
+                    <span data-ng-click="r(user.changeClasse(k.meta))" data-ng-bind-html="k.label|trusted"></span>
+                </span>
+            </small>
+            <form class="form form-inline" novalidate="novalidate" role="form" data-ng-submit="r(user.changeClasse(classeMeta))">
+                <input type="text" class="form-control" data-ng-model="classeMeta" placeholder="classeMeta">
+                <button type="submit" class="btn btn-primary">user.changeClasse('{{classeMeta}}')</button>
+            </form>
+
+            <br/>
+
+            <strong>MTAB_Arbo::get</strong>
+            <small>ex:
+                <span data-ng-click="r(mtab.arboGet(user.classe.boId))">{{user.classe.boId}}</span>
+            </small>
+
+            <form class="form form-inline" novalidate="novalidate" role="form" data-ng-submit="r(mtab.arboGet(boId))">
+                <input type="text" class="form-control" data-ng-model="boId" placeholder="boId">
+                <button type="submit" class="btn btn-primary">mtab.arboGet({{boId}})</button>
+            </form>
+
+            <strong>MTAB_Arbo::getMany</strong>
+
+            <form class="form form-inline" novalidate="novalidate" role="form" data-ng-submit="r(mtab.arboGetMany(boIds))">
+                <input type="text" class="form-control" data-ng-model="boIds" placeholder="boId1, boid2, ...">
+                <button type="submit" class="btn btn-primary">mtab.arboGetMany([{{boIds}}])</button>
+            </form>
+
+            <br/>
+
+            <strong>MTAB_Opd::get</strong>
+
+            <form class="form form-inline" novalidate="novalidate" role="form" data-ng-submit="r(mtab.opdGet(opdId))">
+                <input type="text" class="form-control" data-ng-model="opdId" placeholder="opdId">
+                <button type="submit" class="btn btn-primary">mtab.opdGet({{opdId}})</button>
+            </form>
+
+            <strong>MTAB_Opd::getMany</strong>
+
+            <form class="form form-inline" novalidate="novalidate" role="form" data-ng-submit="r(mtab.opdGetMany(opdIds))">
+                <input type="text" class="form-control" data-ng-model="opdIds" placeholder="opdId1, opdid2, ...">
+                <button type="submit" class="btn btn-primary">mtab.opdGetMany([{{opdIds}}])</button>
+            </form>
+
+            <br/>
+
+            <strong>MTAB_Trace::getPeriode</strong>
+
+            <form class="form" novalidate="novalidate" role="form" data-ng-submit="mtab.traceGetPeriode(user.uid, dateBegin, dateEnd)">
+                <input type="datetime-local" class="form-control" data-ng-model="dateBegin"
+                       placeholder="DATETIME début">
+                <input type="datetime-local" class="form-control" data-ng-model="dateEnd" placeholder="DATETIME fin">
+                <button type="submit" class="btn btn-primary">mtab.traceGetPeriode({{user.uid}}, ...)
+                </button>
+            </form>
+
+        </div>
+    </div>
+</div>
