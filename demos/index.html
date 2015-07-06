@@ -5,16 +5,40 @@
     <title>ng MTAB Api Démo</title>
     <link rel="stylesheet" href="../opd.css" type="text/css"/>
     <link rel="stylesheet" href="bower_components/boot/dist/css/bootstrap.min.css" type="text/css"/>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+    <style>
+        xmp {
+            overflow: auto;
+        }
+        [data-ng-click] {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body data-ng-app="demoApp" data-ng-controller="demoCtrl">
-<div class="container">
-    <div data-ng-include="'views/mtab.html'"></div>
+<div id="loading" style="z-index:999;position:fixed;top:0;right:0;" class="text-right alert-danger" data-ng-if="isLoading">
+    <span class="spinner spinner-xs"></span>
+    <span>loading...</span>
 </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div data-ng-if="!mtab.hasUser()" data-ng-include="'views/login.html'"></div>
+            <div data-ng-if="mtab.hasUser()" data-ng-include="'views/logged.html'"></div>
+        </div>
+        <div class="col-md-6">
+            <xmp class="alert" data-ng-class="{'alert-danger':error, 'alert-success':result}">{{(result||error)|json}}</xmp>
+        </div>
+    </div>
+</div>
+
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/ng-storage/ng-storage.min.js"></script>
 <script src="bower_components/ng-jsonrpc/ng-jsonrpc.min.js"></script>
 <script src="../ng-mtab-api.js"></script>
-<script src="../ng-mtab-directives.js"></script>
+<!-- TODO -->
+<!--<script src="../ng-mtab-directives.js"></script>-->
 <script>
     var app = angular.module("demoApp", [
         "educ.ngStorage",
@@ -23,18 +47,59 @@
     ]);
 
     app.config(["MtabApiProvider", function (MtabApiProvider) {
-        MtabApiProvider.setPersistent(true);
-        MtabApiProvider.useCache(true);
         MtabApiProvider.setUrl("http://www.maxicours.com/W/rpc/mobilite/mtab.php");
+        // permet de rester sur un rechargement de page
+        MtabApiProvider.setPersistent(true);
+        // active ou non un cache en localStorage des réponses arbo* et opd*
+        MtabApiProvider.useCache(false);
+    }]);
+
+    app.config(["$httpProvider", function ($httpProvider) {
+        $httpProvider.interceptors.push(['$rootScope', function ($rootScope) {
+            $rootScope.isLoading = 0;
+            return {
+                'request': function (config) {
+                    $rootScope.isLoading++;
+                    return config
+                },
+                'requestError': function (rejection) {
+                    $rootScope.isLoading = Math.max(0, $rootScope.isLoading - 1);
+                    return rejection
+                },
+                'response': function (response) {
+                    $rootScope.isLoading = Math.max(0, $rootScope.isLoading - 1);
+                    return response;
+                },
+                'responseError': function (rejection) {
+                    $rootScope.isLoading = Math.max(0, $rootScope.isLoading - 1);
+                    return rejection;
+                }
+            };
+        }]);
     }]);
 
     app.controller("demoCtrl", ["$scope", "MtabApi", function ($scope, MtabApi) {
         $scope.mtab = MtabApi;
 
-        var end = new Date();
+        $scope.r = function (x) {
+            if (x.then) {
+                x.then(function (result) {
+                    $scope.error = false;
+                    $scope.result = result;
+                }, function (error) {
+                    $scope.error = error;
+                    $scope.result = false;
+                })
+            } else {
+                $scope.error = false;
+                $scope.result = x;
+            }
+        };
+
+        var end = new Date(); end.setMilliseconds(0);
         var begin = new Date(end - 24 * 3600 * 1000);
-        $scope.dateBegin = MtabApi.dateToSqlDatetime(begin);
-        $scope.dateEnd = MtabApi.dateToSqlDatetime(end);
+        $scope.dateEnd = end;
+        $scope.dateBegin = begin;
 
     }]);
 </script>

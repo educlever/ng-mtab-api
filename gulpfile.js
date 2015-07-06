@@ -23,4 +23,10 @@ gulp.task('default', function () {
         .pipe(less())
         .pipe(minifyCSS())
         .pipe(gulp.dest('.'));
+
+    gulp.src('./demos/style.less')
+        .pipe(less())
+        .pipe(minifyCSS())
+        .pipe(gulp.dest('./demos/'));
+
 });

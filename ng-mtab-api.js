@@ -13,6 +13,12 @@
         });
     }]);
 
+    module.filter('trusted', ['$sce', function ($sce) {
+        return function (text) {
+            return $sce.trustAsHtml(text);
+        };
+    }]);
+
     module.provider("MtabApi", function () {
 
         var url;
@@ -38,7 +44,7 @@
         };
 
         this.$get = ["$rootScope", "$http", "$q", "JsonRpc", "StorageService", function ($rootScope, $http, $q, JsonRpc, storage) {
-            rpc = JsonRpc.entrypoint(url + "/W/rpc/mobilite/mtab.php");
+            rpc = JsonRpc.entrypoint(url);
 
             if (persistent) {
                 retreiveUsermodel();
@@ -586,6 +592,7 @@
                             $rootScope.$broadcast(name, byName[name]);
                         }
                     }
+                    user.sendObsels(acknowledges);
                 }
             }
 
