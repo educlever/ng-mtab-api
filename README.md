@@ -33,6 +33,7 @@ Configure the service
 angular.module('myapp').config(['MtabApiProvider', function(MtabApiProvider) {
     MtabApiProvider.setPersistent(true);
     MtabApiProvider.useCache(true);
-    MtabApiProvider.setUrl("http://www.maxicours.com/W/rpc/mobilite/mtab.php");
+    MtabApiProvider.setMainUrl("http://www.maxicours.com/W/rpc/mobilite/mtab.php");
+    MtabApiProvider.setEidUrl("http://www.maxicours.com/_eid.php");
 });
 ```
