@@ -331,15 +331,27 @@
                 ].join(" ") : d;
             };
 
-            service.traceGetPeriode = function (actorId, dateBegin, dateEnd) {
+            service.traceGetPeriode = function (actorId, dateBegin, dateEnd, filters) {
                 var dt1 = service.dateToSqlDatetime(dateBegin);
                 var dt2 = service.dateToSqlDatetime(dateEnd);
                 return service.withAutoReconnect(function () {
-                    return service.call("MTAB_Trace::getPeriode", [actorId, dt1, dt2])
+                    return service.call("MTAB_Trace::getPeriode", [actorId, dt1, dt2, filters])
                         .promise
-                        .then(function (obsels) {
+                        .then(function (list) {
+                            var obsels = [];
+                            list.forEach(function(obsel) {
+                                obsels.push(new ObselModel(obsel));
+                            });
                             return obsels;
                         });
+                });
+            };
+            service.traceDeletePeriode = function (actorId, dateBegin, dateEnd) {
+                var dt1 = service.dateToSqlDatetime(dateBegin);
+                var dt2 = service.dateToSqlDatetime(dateEnd);
+                return service.withAutoReconnect(function () {
+                    return service.call("MTAB_Trace::deletePeriode", [actorId, dt1, dt2])
+                        .promise;
                 });
             };
 
@@ -507,6 +519,32 @@
                 defered.resolve(value);
                 return defered.promise;
             }
+
+            function ObselModel(data) {
+                angular.copy(data, this);
+            }
+            ObselModel.prototype.save = function() {
+                var _this = this;
+                return service.withAutoReconnect(function () {
+                    return service.call("MTAB_Trace::save", [_this])
+                        .promise
+                        .then(function (obsel) {
+                            for (var k in obsel) {
+                                if (obsel.hasOwnProperty(k)) {
+                                    _this[k] = obsel[k];
+                                }
+                            }
+                            return _this;
+                        });
+                });
+            };
+            ObselModel.prototype.destroy = function() {
+                var _this = this;
+                return service.withAutoReconnect(function () {
+                    return service.call("MTAB_Trace::delete", [_this.id])
+                        .promise;
+                });
+            };
 
             function UserModel(data) {
                 angular.copy(data, this);
