@@ -8,6 +8,20 @@
             <button class="btn btn-success" data-ng-click="r(mtab.tryToReuseExistingSession())">
                 mtab.tryToReuseExistingSession()
             </button>
+            <br/>
+            <br/>
+
+            <div class="well">
+                <form novalidate="novalidate" class="form">
+                    <div class="form-group">
+                        <span>_eid=u8p0vu1fabr9vqt9njefefsqs4</span>
+                        <input class="form-control" type="text" placeholder="_eid=XXXXXXXXX" data-ng-model="session"/>
+                        <button data-ng-class="{disabled:!session}" class="btn btn-success btn-block"
+                                data-ng-click="r(mtab.tryToReuseThisSession(session))">
+                            mtab.tryToReuseThisSession(...)</button>
+                    </div>
+                </form>
+            </div>
 
             <h3 class="modal-title">Connexion à l'API MTAB</h3>
         </div>
