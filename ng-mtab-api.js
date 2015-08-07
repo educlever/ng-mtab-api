@@ -57,6 +57,48 @@
                 forgetSessionId();
             }
 
+            service.tryToReuseThisSession = function (session) {
+                // session doit être de la forme _eid=XXXXXXXXX
+                if (!(session + "").match(/^_eid=\w+$/)) {
+                    throw "bad session";
+                }
+                var defered = $q.defer();
+                $http.get(urlEid + "?" + session, {withCredentials: true})
+                    .success(function (data, status, headers, config) {
+                        if (!data || !(200 <= status && status <= 299)) {
+                            defered.reject(status);
+                        } else {
+                            defered.resolve(data);
+                        }
+                    })
+                    .error(function (data, status, headers, config) {
+                        defered.reject(status);
+                    });
+                return defered.promise.then(function (session) {
+                    if (session) {
+                        forgetSessionId();
+                        rememberSessionId(session);
+                        var defered = $q.defer();
+                        service.call("MTAB_User::current", [])
+                            .promise
+                            .then(function (userData) {
+                                setUserModel(new UserModel(userData));
+                                forgetSessionId();
+                                rememberSessionId(userModel.session);
+                                console.log("MtabApi reused user", userModel);
+                                defered.resolve(getUserModel());
+                            }, function () {
+                                console.log("MtabApi can't reuse this session " + session);
+                                defered.resolve(false);
+                            });
+                        return defered.promise;
+                    } else {
+                        console.log("MtabApi can't reuse empty session");
+                        return false;
+                    }
+                });
+            };
+
             service.tryToReuseExistingSession = function () {
                 var defered = $q.defer();
                 $http.get(urlEid, {withCredentials: true})
@@ -339,7 +381,7 @@
                         .promise
                         .then(function (list) {
                             var obsels = [];
-                            list.forEach(function(obsel) {
+                            list.forEach(function (obsel) {
                                 obsels.push(new ObselModel(obsel));
                             });
                             return obsels;
@@ -523,7 +565,8 @@
             function ObselModel(data) {
                 angular.copy(data, this);
             }
-            ObselModel.prototype.save = function() {
+
+            ObselModel.prototype.save = function () {
                 var _this = this;
                 return service.withAutoReconnect(function () {
                     return service.call("MTAB_Trace::save", [_this])
@@ -538,7 +581,7 @@
                         });
                 });
             };
-            ObselModel.prototype.destroy = function() {
+            ObselModel.prototype.destroy = function () {
                 var _this = this;
                 return service.withAutoReconnect(function () {
                     return service.call("MTAB_Trace::delete", [_this.id])
