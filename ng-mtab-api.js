@@ -227,7 +227,14 @@
                     });
             };
 
-            service.arboGet = function (boId) {
+            service.arboGet = function (boId, moreOptions) {
+                var childsSelectors = null;
+                if (!!moreOptions) {
+                    if (!!moreOptions.childsSelectors) {
+                        childsSelectors = moreOptions.childsSelectors;
+                        delete moreOptions.childsSelectors;
+                    }
+                }
                 var cacheRepo = "arboCache";
                 var classeMeta = getUserModel().classe.meta;
                 var cacheKey = classeMeta + '-' + boId;
@@ -235,7 +242,7 @@
                     return cacheResolved(new ArboModel(cacheGet(cacheRepo, cacheKey)));
                 }
                 return service.withAutoReconnect(function () {
-                    return service.call("MTAB_Arbo::get", [boId])
+                    return service.call("MTAB_Arbo::get", [boId, childsSelectors, moreOptions])
                         .promise
                         .then(function (arboData) {
                             var arboModel = new ArboModel(arboData);
@@ -247,9 +254,17 @@
                 });
             };
 
-            service.arboGetMany = function (boIds) {
+            service.arboGetMany = function (boIds, moreOptions) {
                 if (!angular.isArray(boIds) && angular.isString(boIds)) {
                     boIds = boIds.split(/\D+/);
+                }
+
+                var childsSelectors = null;
+                if (!!moreOptions) {
+                    if (!!moreOptions.childsSelectors) {
+                        childsSelectors = moreOptions.childsSelectors;
+                        delete moreOptions.childsSelectors;
+                    }
                 }
 
                 var classeMeta = getUserModel().classe.meta;
@@ -271,7 +286,7 @@
                 });
                 if (missingBoIds.length) {
                     promise = service.withAutoReconnect(function () {
-                        return service.call("MTAB_Arbo::getMany", [missingBoIds])
+                        return service.call("MTAB_Arbo::getMany", [missingBoIds, childsSelectors, moreOptions])
                             .promise
                             .then(function (arboDataList) {
                                 arboDataList.forEach(function (arboData) {
